@@ -1,5 +1,7 @@
+df2["Org Unit Path"].str.cat(df['org'])
+
 # G Suite Utilities
-s
+
 Scripts handy for admining G Suite domains and organizations
 
 
@@ -23,6 +25,6 @@ G Suite wants a specially formatted CSV file.
 
 1. convert the HR spreadsheet to G Suite CSV
    ```sh
-   python bulk_useradd.py newusers.py newusers.csv mydomain.org
+   python bulk_useradd.py newusers.py newusers.csv mydomain.org hash password_length
    ```
 2. upload `newusers.csv` to G Suite via [Bulk User Add](https://support.google.com/a/answer/40057)
