@@ -1,4 +1,4 @@
-df2["Org Unit Path"].str.cat(df['org'])
+[![Build Status](https://travis-ci.com/scivision/gsuite-utils.svg?branch=master)](https://travis-ci.com/scivision/gsuite-utils)
 
 # G Suite Utilities
 
