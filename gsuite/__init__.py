@@ -12,8 +12,6 @@ def xls2df(xlsfn: Path) -> pd.DataFrame:
 
     xlsfn = Path(xlsfn).expanduser()
 
-    print('reading', xlsfn)
-
     df = pd.read_excel(xlsfn, header=0, index_col=0, usecols=[1, 3, 4])
     df['email'] = df['email'].str.split().str.get(0)
 
@@ -21,6 +19,8 @@ def xls2df(xlsfn: Path) -> pd.DataFrame:
     user2['email'] = user2['email'].str.split().str.get(1)
 
     df2 = df.append(user2, verify_integrity=False, sort=False)
+
+    df2['org'] = df2['org'].str.strip().str.lower()
 
     df2 = df2.iloc[df2.index.notna(), :]
 
@@ -32,6 +32,18 @@ def df2csv(df: pd.DataFrame, domain: str,
            csvfn: Path):
     """google admin user bulk add fields are used
     """
+    if domain is None:
+        print('skipping CSV output because domain was not specified')
+        return
+
+    if Hash is None:
+        print('skipping CSV output because hash was not specified')
+
+    if plen is None:
+        print('skipping CSV output because password length was not specified')
+
+    if csvfn is None:
+        print('skipping CSV output because output filename was not specified')
 
     df2 = pd.DataFrame(columns=["First Name", "Last Name", "Email Address",
                                 "Password", "Password Hash Function",
