@@ -13,7 +13,7 @@ import gsuite as G
 def main():
     p = ArgumentParser()
     p.add_argument('xlsfn', help='spreadsheet with user info')
-    p.add_argument('-o','--csvfn', help='output csv for Google Admin add users import')
+    p.add_argument('-o', '--csvfn', help='output csv for Google Admin add users import')
     p.add_argument('-domain', help='e.g. mywork.com')
     p.add_argument('-hash', help='password hash function')
     p.add_argument('-plen', help='initial random password length', type=int)
@@ -21,17 +21,16 @@ def main():
     P = p.parse_args()
 
     df = G.xls2df(P.xlsfn)
-    
+
     df2 = G.df2csv(df, P.domain, P.hash, P.plen, P.csvfn)
     if P.print:
-        d = df2[df['org']==P.print]
+        d = df2[df['org'] == P.print]
         if d.size > 0:
             print(d)
         else:
-            print(df2[df['days']==P.print])
+            print(df2[df['days'] == P.print])
     else:
         print(df)
-        
 
 
 if __name__ == '__main__':
