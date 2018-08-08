@@ -21,11 +21,17 @@ def main():
     P = p.parse_args()
 
     df = G.xls2df(P.xlsfn)
+    
+    df2 = G.df2csv(df, P.domain, P.hash, P.plen, P.csvfn)
     if P.print:
-        print(df[df['org']==P.print])
+        d = df2[df['org']==P.print]
+        if d.size > 0:
+            print(d)
+        else:
+            print(df2[df['days']==P.print])
     else:
         print(df)
-        G.df2csv(df, P.domain, P.hash, P.plen, P.csvfn)
+        
 
 
 if __name__ == '__main__':
