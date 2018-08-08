@@ -24,11 +24,12 @@ def main():
 
     df2 = G.df2csv(df, P.domain, P.hash, P.plen, P.csvfn)
     if P.print:
-        d = df2[df['org'] == P.print]
+        d = df2.iloc[(df2["Org Unit Path"] == '/'+P.print).values, :]["Email Address"]
         if d.size > 0:
-            print(d)
+            print(', '.join(d.tolist()))
         else:
-            print(df2[df['days'] == P.print])
+            d = df2.iloc[(df['days'] == P.print).values, :]["Email Address"].values
+            print(', '.join(d.tolist()))
     else:
         print(df)
 

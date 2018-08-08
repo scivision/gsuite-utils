@@ -1,5 +1,6 @@
 import hashlib
 import secrets
+import logging
 import pandas as pd
 from pathlib import Path
 
@@ -43,30 +44,26 @@ def df2csv(df: pd.DataFrame, domain: str,
     df2['Last Name'] = df.index.str.split().str.get(-1)
     stem = df2['First Name'].str.lower().str.cat(['.']*df.shape[0]).str.cat(df2['Last Name'].str.lower())
 
-    df2["Email Address"] = stem.str.cat(['@'+domain]*stem.size)
-
     df2['Recovery Email'] = df['email'].values
 
     df2["Org Unit Path"] = '/'
     df2["Org Unit Path"] = df2["Org Unit Path"].str.cat(df['org'].values)
 
-# %% defaults
-    df2["Change Password at Next Sign-In"] = 'y'
-
     if domain is None:
         print('skipping CSV output because domain was not specified')
         return df2
+        
+    df2["Email Address"] = stem.str.cat(['@'+domain]*stem.size)
+
+# %% defaults
+    df2["Change Password at Next Sign-In"] = 'y'
 
     if Hash is None:
-        print('skipping CSV output because hash was not specified')
+        logging.info('skipping CSV output because hash was not specified')
         return df2
 
     if plen is None:
         print('skipping CSV output because password length was not specified')
-        return df2
-
-    if csvfn is None:
-        print('skipping CSV output because output filename was not specified')
         return df2
 
 # %% hash
@@ -76,5 +73,11 @@ def df2csv(df: pd.DataFrame, domain: str,
         df2.loc[u[0], 'Password'] = h.hexdigest()
     df2['Password Hash Function'] = Hash
 # %% write output
+    if csvfn is None:
+        print('skipping CSV output because output filename was not specified')
+        return df2
+        
     print('writing', csvfn)
     df2.to_csv(csvfn, index=False)
+    
+    return df2
