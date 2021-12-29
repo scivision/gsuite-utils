@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.com/scivision/gsuite-utils.svg?branch=master)](https://travis-ci.com/scivision/gsuite-utils)
-[![Build status](https://ci.appveyor.com/api/projects/status/ueipv1fj9ay8f0sq?svg=true)](https://ci.appveyor.com/project/scivision/gsuite-utils)
 
 # G Suite Utilities
 
